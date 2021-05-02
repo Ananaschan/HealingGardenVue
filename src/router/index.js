@@ -6,6 +6,9 @@ import adminLogin from "../views/back/adminLogin";
 import adminList from "../components/back/adminList";
 import userList from "../views/back/userList";
 import addUser from "../views/back/addUser";
+import updateUser from "../views/back/updateUser";
+
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -38,6 +41,15 @@ export default new VueRouter({
           path: '/addUser',
           name: 'addUser',
           component: addUser,
+          meta: {
+            //未登录拦截
+            requireAuth: true
+          }
+        },
+        {
+          path: '/updateUser',
+          name: 'updateUser',
+          component: updateUser,
           meta: {
             //未登录拦截
             requireAuth: true

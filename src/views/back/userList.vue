@@ -104,6 +104,18 @@
             .catch(failResponse => {
             })
         },
+        updateUser(id){
+          this.$axios
+            .post('/deleteUser',this.$qs.stringify({
+              id: id
+            }))
+            .then(successResponse => {
+              console.log(successResponse.data)
+
+            })
+            .catch(failResponse => {
+            })
+        },
         formatter(row, column) {
           return row.address;
         }
