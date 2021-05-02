@@ -40,7 +40,7 @@
               active-text-color="#ffd04b">
               <el-submenu index="1">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
+                  <i class="el-icon-knife-fork"></i>
                   <span>食品管理</span>
                 </template>
                 <el-menu-item-group>
@@ -50,7 +50,7 @@
               </el-submenu>
               <el-submenu index="2">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
+                  <i class="el-icon-notebook-2"></i>
                   <span>类别管理</span>
                 </template>
                 <el-menu-item-group>
@@ -60,24 +60,27 @@
               </el-submenu>
               <el-submenu index="3">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
+                  <i class="el-icon-user"></i>
                   <span>用户管理</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="3-1">用户列表</el-menu-item>
-                  <el-menu-item index="3-2">用户添加</el-menu-item>
+                  <el-menu-item index="3-1">
+                    <router-link to="/userList">用户列表</router-link>
+                    </el-menu-item>
+                  <el-menu-item index="3-2">
+                    <router-link to="/addUser">用户添加</router-link>
+                  </el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="4">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
+                  <i class="el-icon-user-solid"></i>
                   <span>管理员管理</span>
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="4-1">
                     <router-link to="/adminList">管理员列表</router-link>
                   </el-menu-item>
-                  <el-menu-item index="4-2">管理员添加</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-menu-item index="5">
@@ -91,7 +94,6 @@
       </el-aside>
       <el-container>
         <el-main>
-          Main
           <router-view></router-view>
         </el-main>
         <el-footer>©HealingGarden有限公司</el-footer>
@@ -150,7 +152,6 @@
     background-color: #FFF;
     color: #333;
     text-align: center;
-    line-height: 160px;
   }
 
   body > .el-container {

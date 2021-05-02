@@ -1,27 +1,36 @@
 <template>
-  <el-table
-    :data="tableData"
-    style="width: 100%"
-    :default-sort = "{prop: 'date', order: 'descending'}"
-  >
-    <el-table-column
-      prop="date"
-      label="日期"
-      sortable
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="姓名"
-      sortable
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="地址"
-      :formatter="formatter">
-    </el-table-column>
-  </el-table>
+  <div>
+    <h1 style="">管理员列表</h1>
+    <el-table
+      class="el-table"
+      :data="tableData"
+      style="width: 80%"
+      :default-sort = "{prop: 'date', order: 'descending'}"
+    >
+      <el-table-column
+        class="el-table-column"
+        type="selection"
+      >
+      </el-table-column>
+      <el-table-column
+        class="el-table-column"
+        prop="userName"
+        label="用户名"
+        sortable
+      >
+      </el-table-column>
+
+      <el-table-column
+        class="el-table-column"
+        prop="password"
+        label="密码"
+        sortable
+      >
+      </el-table-column>
+
+    </el-table>
+  </div>
+
 </template>
 
 <script>
@@ -29,26 +38,21 @@
         name: "adminList",
       data() {
         return {
-          tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
+          tableData: []
         }
+      },mounted(){
+        this.getList()
       },
       methods: {
+        getList(){
+          this.$axios
+            .post('/adminList')
+            .then(successResponse => {
+              this.tableData = successResponse.data
+            })
+            .catch(failResponse => {
+            })
+        },
         formatter(row, column) {
           return row.address;
         }
@@ -58,4 +62,10 @@
 
 <style scoped>
 
+  .el-table{
+      margin:0 auto;
+      text-align:center;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+      width: 500px;
+  }
 </style>

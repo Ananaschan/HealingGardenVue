@@ -46,15 +46,20 @@
         },
       methods:{
         login () {
+          var _this = this
+          console.log(this.$store.state)
           this.$axios
             .post('/adminLogin', {
               userName: this.loginForm.userName,
               password: this.loginForm.password
             })
             .then(successResponse => {
-              console.log(successResponse.data)
-              if (successResponse.data === true) {
-                this.$router.replace({path: '/adminIndex'})
+              if (successResponse.data.code === 200) {
+                //用户名密码匹配正确
+                //调用store中adminLogin方法保存用户登录状态
+                _this.$store.commit('adminLogin',_this.loginForm)
+                var path = this.$route.query.redirect
+                this.$router.replace({path: path==='/' || path === undefined ? 'adminIndex' : path})
               }
             })
             .catch(failResponse => {
