@@ -8,6 +8,8 @@ import userList from "../components/back/userList";
 import addUser from "../components/back/addUser";
 import foodTypeList from "../components/back/foodTypeList";
 import addFoodType from "../components/back/addFoodType";
+import foodList from "../components/back/foodList";
+
 
 Vue.use(VueRouter);
 
@@ -59,6 +61,15 @@ export default new VueRouter({
           path: '/addFoodType',
           name: 'addFoodType',
           component: addFoodType,
+          meta: {
+            //未登录拦截
+            requireAuth: true
+          },
+        },
+        {
+          path: '/foodList',
+          name: 'foodList',
+          component: foodList,
           meta: {
             //未登录拦截
             requireAuth: true

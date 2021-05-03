@@ -43,8 +43,10 @@
                   <i class="el-icon-knife-fork"></i>
                   <span>食品管理</span>
                 </template>
-                <el-menu-item-group>
-                  <el-menu-item index="1-1">食品列表</el-menu-item>
+                  <el-menu-item-group>
+                    <el-menu-item index="1-1">
+                      <router-link to="/foodList">食品列表</router-link>
+                    </el-menu-item>
                   <el-menu-item index="1-2">食品添加</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
