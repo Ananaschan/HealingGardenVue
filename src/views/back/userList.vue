@@ -52,15 +52,15 @@
       >
 
         <template slot-scope="scope">
-          <el-button type="primary" plain>修改</el-button>
+          <el-button type="primary" plain @click="showEditDialog(scope.row.id)">修改</el-button>
           <el-popover
             placement="top"
             width="160"
-            v-model="visible">
+            >
             <p>确定删除吗？</p>
             <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-              <el-button type="primary" size="mini" @click="visible = false,deleteUser(scope.row.id)">确定</el-button>
+              <el-button size="mini" type="text" >取消</el-button>
+              <el-button type="primary" size="mini" @click="deleteUser(scope.row.id)">确定</el-button>
             </div>
             <el-button slot="reference" type="danger" plain>删除</el-button>
           </el-popover>
@@ -68,6 +68,41 @@
 
       </el-table-column>
     </el-table>
+
+
+    <el-dialog
+      title="修改用户信息"
+      :visible.sync="editDialogVisible"
+      width="50%"
+      >
+
+      <span>这是一段信息</span>
+      <el-form :model="editForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+        <el-form-item label="用户名" prop="userName">
+          <el-input type="text" v-model="editForm.userName" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="密码" prop="password">
+          <el-input type="password" v-model="editForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+
+
+        <el-form-item label="电话" prop="telephone">
+          <el-input v-model.number="editForm.telephone"></el-input>
+        </el-form-item>
+
+        <el-form-item label="地址" prop="address">
+          <el-input v-model.number="editForm.address"></el-input>
+        </el-form-item>
+
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="editDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="editDialogVisible = false,submitForm('ruleForm')">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -75,8 +110,53 @@
     export default {
         name: "userList",
       data() {
+
+        var checkUserName = (rule, value, callback) => {
+          if (value === '') {
+            return callback(new Error('用户名不能为空'));
+          } else {
+            callback();
+          }
+        };
+        var validatePass = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入密码'));
+          } else {
+            callback();
+          }
+        };
+        var telephone = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入电话'));
+          } else {
+            callback();
+          }
+        };
+        var address = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请输入地址'));
+          }  else {
+            callback();
+          }
+        };
         return {
-          tableData: []
+          tableData: [],
+          editDialogVisible: false,
+          editForm: {},
+          rules: {
+            userName: [
+              { validator: checkUserName, trigger: 'blur' }
+            ],
+            password: [
+              { validator: validatePass, trigger: 'blur' }
+            ],
+            telephone: [
+              { validator: telephone, trigger: 'blur' }
+            ],
+            address: [
+              { validator: address, trigger: 'blur' }
+            ]
+          }
         }
       },mounted(){
         this.getList()
@@ -104,17 +184,49 @@
             .catch(failResponse => {
             })
         },
-        updateUser(id){
+        showEditDialog(id){
           this.$axios
-            .post('/deleteUser',this.$qs.stringify({
+            .post('/getUserById',this.$qs.stringify({
               id: id
             }))
             .then(successResponse => {
               console.log(successResponse.data)
-
+              this.editForm = successResponse.data
             })
             .catch(failResponse => {
             })
+          this.editDialogVisible = true
+        },
+        updateUser(){
+          this.$axios
+            .post('/updateUser',{
+              id: this.editForm.id,
+              userName: this.editForm.userName,
+              password: this.editForm.password,
+              telephone: this.editForm.telephone,
+              address: this.editForm.address
+            })
+            .then(successResponse => {
+              console.log(successResponse.data)
+              this.getList()
+            })
+            .catch(failResponse => {
+            })
+        },
+        submitForm(formName) {
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              console.log('submit!')
+              //向后端提交数据
+              this.updateUser()
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
+        },
+        resetForm(formName) {
+          this.$refs[formName].resetFields();
         },
         formatter(row, column) {
           return row.address;
