@@ -4,9 +4,10 @@ import VueRouter from "vue-router";
 import adminIndex from "../views/back/adminIndex";
 import adminLogin from "../views/back/adminLogin";
 import adminList from "../components/back/adminList";
-import userList from "../views/back/userList";
-import addUser from "../views/back/addUser";
-
+import userList from "../components/back/userList";
+import addUser from "../components/back/addUser";
+import foodTypeList from "../components/back/foodTypeList";
+import addFoodType from "../components/back/addFoodType";
 
 Vue.use(VueRouter);
 
@@ -44,6 +45,24 @@ export default new VueRouter({
             //未登录拦截
             requireAuth: true
           }
+        },
+        {
+          path: '/foodTypeList',
+          name: 'foodTypeList',
+          component: foodTypeList,
+          meta: {
+            //未登录拦截
+            requireAuth: true
+          },
+        },
+        {
+          path: '/addFoodType',
+          name: 'addFoodType',
+          component: addFoodType,
+          meta: {
+            //未登录拦截
+            requireAuth: true
+          },
         }
       ],
       meta: {

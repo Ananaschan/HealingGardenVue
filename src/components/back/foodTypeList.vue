@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="">用户列表</h1>
+    <h1 style="">食品种类列表</h1>
     <el-table
       class="el-table"
       :data="tableData"
@@ -9,40 +9,20 @@
     >
       <el-table-column
         class="el-table-column"
-        type="selection"
-      >
-      </el-table-column>
-      <el-table-column
-        class="el-table-column"
-        prop="userName"
-        label="用户名"
+        prop="id"
+        label="种类id"
         sortable
       >
       </el-table-column>
 
       <el-table-column
         class="el-table-column"
-        prop="password"
-        label="密码"
+        prop="typeName"
+        label="种类名称"
         sortable
       >
       </el-table-column>
 
-      <el-table-column
-        class="el-table-column"
-        prop="telephone"
-        label="电话"
-        sortable
-      >
-      </el-table-column>
-
-      <el-table-column
-        class="el-table-column"
-        prop="address"
-        label="地址"
-        sortable
-      >
-      </el-table-column>
 
       <el-table-column
         class="el-table-column"
@@ -56,11 +36,11 @@
           <el-popover
             placement="top"
             width="160"
-            >
+          >
             <p>确定删除吗？</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" >取消</el-button>
-              <el-button type="primary" size="mini" @click="deleteUser(scope.row.id)">确定</el-button>
+              <el-button type="primary" size="mini" @click="deleteFoodType(scope.row.id)">确定</el-button>
             </div>
             <el-button slot="reference" type="danger" plain>删除</el-button>
           </el-popover>
@@ -71,29 +51,15 @@
 
 
     <el-dialog
-      title="修改用户信息"
+      title="修改食品种类信息"
       :visible.sync="editDialogVisible"
       width="50%"
-      >
+    >
 
-      <span>这是一段信息</span>
       <el-form :model="editForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-        <el-form-item label="用户名" prop="userName">
-          <el-input type="text" v-model="editForm.userName" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="editForm.password" autocomplete="off"></el-input>
-        </el-form-item>
-
-
-        <el-form-item label="电话" prop="telephone">
-          <el-input v-model.number="editForm.telephone"></el-input>
-        </el-form-item>
-
-        <el-form-item label="地址" prop="address">
-          <el-input v-model.number="editForm.address"></el-input>
+        <el-form-item label="食品种类名称" prop="typeName">
+          <el-input type="text" v-model="editForm.typeName" autocomplete="off"></el-input>
         </el-form-item>
 
       </el-form>
@@ -108,34 +74,12 @@
 
 <script>
     export default {
-        name: "userList",
+        name: "foodTypeList",
       data() {
-
-        var checkUserName = (rule, value, callback) => {
+        var checkTypeName = (rule, value, callback) => {
           if (value === '') {
-            return callback(new Error('用户名不能为空'));
+            return callback(new Error('种类名称不能为空'));
           } else {
-            callback();
-          }
-        };
-        var validatePass = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请输入密码'));
-          } else {
-            callback();
-          }
-        };
-        var telephone = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请输入电话'));
-          } else {
-            callback();
-          }
-        };
-        var address = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请输入地址'));
-          }  else {
             callback();
           }
         };
@@ -144,27 +88,19 @@
           editDialogVisible: false,
           editForm: {},
           rules: {
-            userName: [
-              { validator: checkUserName, trigger: 'blur' }
-            ],
-            password: [
-              { validator: validatePass, trigger: 'blur' }
-            ],
-            telephone: [
-              { validator: telephone, trigger: 'blur' }
-            ],
-            address: [
-              { validator: address, trigger: 'blur' }
+            typeName: [
+              { validator: checkTypeName, trigger: 'blur' }
             ]
           }
         }
-      },mounted(){
+      },
+      mounted(){
         this.getList()
       },
       methods: {
         getList(){
           this.$axios
-            .post('/userList')
+            .post('/getFoodTypeList')
             .then(successResponse => {
               console.log(successResponse.data)
               this.tableData = successResponse.data
@@ -172,9 +108,9 @@
             .catch(failResponse => {
             })
         },
-        deleteUser(id){
+        deleteFoodType(id){
           this.$axios
-            .post('/deleteUser',this.$qs.stringify({
+            .post('/deleteFoodType',this.$qs.stringify({
               id: id
             }))
             .then(successResponse => {
@@ -186,7 +122,7 @@
         },
         showEditDialog(id){
           this.$axios
-            .post('/getUserById',this.$qs.stringify({
+            .post('/getFoodTypeById',this.$qs.stringify({
               id: id
             }))
             .then(successResponse => {
@@ -197,14 +133,11 @@
             })
           this.editDialogVisible = true
         },
-        updateUser(){
+        updateFoodType(){
           this.$axios
-            .post('/updateUser',{
+            .post('/updateFoodType',{
               id: this.editForm.id,
-              userName: this.editForm.userName,
-              password: this.editForm.password,
-              telephone: this.editForm.telephone,
-              address: this.editForm.address
+              typeName: this.editForm.typeName,
             })
             .then(successResponse => {
               console.log(successResponse.data)
@@ -218,7 +151,7 @@
             if (valid) {
               console.log('submit!')
               //向后端提交数据
-              this.updateUser()
+              this.updateFoodType()
             } else {
               console.log('error submit!!');
               return false;

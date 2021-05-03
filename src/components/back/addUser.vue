@@ -25,7 +25,6 @@
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
-    <el-button type="text" @click="open">点击打开 Message Box</el-button>
   </div>
 </template>
 
