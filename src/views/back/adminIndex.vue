@@ -8,22 +8,19 @@
         @select="handleSelect"
         background-color="RGB(57,61,73)"
         text-color="#fff"
-        active-text-color="#ffd04b">
-        <el-menu-item index="1">HealingGarden后台管理</el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">我的工作台</template>
-          <el-menu-item index="2-1">选项1</el-menu-item>
-          <el-menu-item index="2-2">选项2</el-menu-item>
-          <el-menu-item index="2-3">选项3</el-menu-item>
-          <el-submenu index="2-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="2-4-1">选项1</el-menu-item>
-            <el-menu-item index="2-4-2">选项2</el-menu-item>
-            <el-menu-item index="2-4-3">选项3</el-menu-item>
-          </el-submenu>
-        </el-submenu>
-        <el-menu-item index="3" disabled>消息中心</el-menu-item>
-        <el-menu-item index="4"><a href="#" target="_blank">订单管理</a></el-menu-item>
+        active-text-color="#ffd04b"
+        :gutter="20">
+
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-menu-item index="1" :span="18">HealingGarden后台管理</el-menu-item>
+          </el-col>
+
+          <el-col :span="6" :offset="12">
+            <el-button type="danger" plain @click="quit">退出</el-button>
+          </el-col>
+        </el-row>
+
       </el-menu>
     </el-header>
     <el-container>
@@ -47,7 +44,9 @@
                     <el-menu-item index="1-1">
                       <router-link to="/foodList">食品列表</router-link>
                     </el-menu-item>
-                  <el-menu-item index="1-2">食品添加</el-menu-item>
+                  <el-menu-item index="1-2">
+                    <router-link to="/addFood">食品添加</router-link>
+                    </el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="2">
@@ -118,6 +117,7 @@
         };
       },
       methods: {
+
         handleSelect(key, keyPath) {
           console.log(key, keyPath);
         },
@@ -126,6 +126,11 @@
         },
         handleClose(key, keyPath) {
           console.log(key, keyPath);
+        },
+        quit() {
+          var _this = this
+          _this.$store.commit('adminLogin',"")
+          this.$router.push("/adminLogin")
         }
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="">用户列表</h1>
+    <h1 style="">食品列表</h1>
     <el-table
       class="el-table"
       :data="tableData"
@@ -22,7 +22,7 @@
 
       <el-table-column
         class="el-table-column"
-        prop="foodType"
+        prop="foodType.typeName"
         label="食物种类"
         sortable
       >
@@ -71,27 +71,32 @@
 
 
     <el-dialog
-      title="修改用户信息"
+      title="修改食品信息"
       :visible.sync="editDialogVisible"
       width="50%"
     >
       <el-form :model="editForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-        <el-form-item label="食物名称" prop="userName">
+        <el-form-item label="食物名称" prop="foodName">
           <el-input type="text" v-model="editForm.foodName" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="食物类型" prop="password">
-          <el-input type="password" v-model="editForm.foodType" autocomplete="off"></el-input>
-
+        <el-form-item label="食物类型" prop="foodType">
+          <el-select v-model=editForm.foodType.id>
+            <el-option
+              v-for="item in foodTypeList"
+              :key="item.foodTypeList"
+              :label="item.typeName"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
 
-
-        <el-form-item label="价格" prop="telephone">
+        <el-form-item label="价格" prop="price">
           <el-input v-model.number="editForm.price"></el-input>
         </el-form-item>
 
-        <el-form-item label="描述" prop="address">
+        <el-form-item label="描述" prop="description">
           <el-input v-model.number="editForm.description"></el-input>
         </el-form-item>
 
@@ -106,20 +111,14 @@
 </template>
 
 <script>
+    import foodTypeList from "./foodTypeList";
+
     export default {
         name: "foodList",
       data() {
-
         var checkFoodName = (rule, value, callback) => {
           if (value === '') {
             return callback(new Error('食物名称不能为空'));
-          } else {
-            callback();
-          }
-        };
-        var checkFoodType = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请输入食物种类'));
           } else {
             callback();
           }
@@ -141,13 +140,22 @@
         return {
           tableData: [],
           editDialogVisible: false,
-          editForm: {},
+          editForm: {
+            id: 0,
+            foodName: '',
+            foodType: {
+              id :0,
+              typeName :''
+            },
+            price: 0,
+            description: ''
+          },
+          foodTypeList: {
+
+          },
           rules: {
             foodName: [
               { validator: checkFoodName, trigger: 'blur' }
-            ],
-            foodType: [
-              { validator: checkFoodType, trigger: 'blur' }
             ],
             price: [
               { validator: checkPrice, trigger: 'blur' }
@@ -160,14 +168,23 @@
       },
       mounted(){
         this.getList()
+        this.getFoodTypeList()
       },
       methods: {
         getList(){
           this.$axios
             .post('/foodList')
             .then(successResponse => {
-              console.log(successResponse.data)
               this.tableData = successResponse.data
+            })
+            .catch(failResponse => {
+            })
+        },
+        getFoodTypeList(){
+          this.$axios
+            .post('/getFoodTypeList')
+            .then(successResponse => {
+              this.foodTypeList = successResponse.data
             })
             .catch(failResponse => {
             })
@@ -190,7 +207,7 @@
               id: id
             }))
             .then(successResponse => {
-              console.log(successResponse.data)
+
               this.editForm = successResponse.data
             })
             .catch(failResponse => {
@@ -198,6 +215,7 @@
           this.editDialogVisible = true
         },
         updateFood(){
+          console.log("editForm:",this.editForm)
           this.$axios
             .post('/updateFood',{
               id: this.editForm.id,
@@ -212,6 +230,7 @@
             })
             .catch(failResponse => {
             })
+          console.log(this.editForm.foodType)
         },
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
