@@ -41,12 +41,16 @@
                   <span>食品管理</span>
                 </template>
                   <el-menu-item-group>
-                    <el-menu-item index="1-1">
-                      <router-link to="/foodList">食品列表</router-link>
-                    </el-menu-item>
-                  <el-menu-item index="1-2">
-                    <router-link to="/addFood">食品添加</router-link>
-                    </el-menu-item>
+                    <router-link to="/foodList">
+                      <el-menu-item index="1-1">
+                        食品列表
+                      </el-menu-item>
+                   </router-link>
+                    <router-link to="/addFood">
+                      <el-menu-item index="1-2">
+                        食品添加
+                      </el-menu-item>
+                    </router-link>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="2">
@@ -55,12 +59,16 @@
                   <span>类别管理</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="2-1">
-                    <router-link to="/foodTypeList">类别列表</router-link>
-                  </el-menu-item>
-                  <el-menu-item index="2-2">
-                    <router-link to="/addFoodType">类别添加</router-link>
-                  </el-menu-item>
+                  <router-link to="/foodTypeList">
+                    <el-menu-item index="2-1">
+                      类别列表
+                    </el-menu-item>
+                  </router-link>
+                  <router-link to="/addFoodType">
+                    <el-menu-item index="2-2">
+                      类别添加
+                    </el-menu-item>
+                  </router-link>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="3">
@@ -69,12 +77,16 @@
                   <span>用户管理</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="3-1">
-                    <router-link to="/userList">用户列表</router-link>
+                  <router-link to="/userList">
+                    <el-menu-item index="3-1">
+                      用户列表
                     </el-menu-item>
-                  <el-menu-item index="3-2">
-                    <router-link to="/addUser">用户添加</router-link>
-                  </el-menu-item>
+                  </router-link>
+                  <router-link to="/addUser">
+                    <el-menu-item index="3-2">
+                      用户添加
+                    </el-menu-item>
+                  </router-link>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="4">
@@ -83,9 +95,11 @@
                   <span>管理员管理</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="4-1">
-                    <router-link to="/adminList">管理员列表</router-link>
-                  </el-menu-item>
+                  <router-link to="/adminList">
+                    <el-menu-item index="4-1">
+                      管理员列表
+                    </el-menu-item>
+                  </router-link>
                 </el-menu-item-group>
               </el-submenu>
               <el-menu-item index="5">
@@ -137,6 +151,11 @@
 </script>
 
 <style scoped>
+
+  * {
+    text-decoration: none;
+    text-decoration-color: black;
+  }
   .el-menu-demo{
     width: 100%;
     margin-left: -20px;

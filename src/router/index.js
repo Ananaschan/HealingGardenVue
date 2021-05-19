@@ -10,13 +10,26 @@ import foodTypeList from "../components/back/foodTypeList";
 import addFoodType from "../components/back/addFoodType";
 import foodList from "../components/back/foodList";
 import addFood from "../components/back/addFood";
-
+import mainIndex from "../views/front/mainIndex";
+import home from "../components/front/home";
 
 Vue.use(VueRouter);
 
 export default new VueRouter({
   mode:'history',
   routes:[
+    {
+      path: '/mainIndex',
+      name: 'mainIndex',
+      component: mainIndex,
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: home,
+        }
+      ]
+    },
     {//后台首页
       path: '/adminIndex',
       name: 'adminIndex',
