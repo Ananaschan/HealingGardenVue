@@ -12,6 +12,7 @@ import foodList from "../components/back/foodList";
 import addFood from "../components/back/addFood";
 import mainIndex from "../views/front/mainIndex";
 import home from "../components/front/home";
+import ordersList from "../components/back/ordersList";
 
 Vue.use(VueRouter);
 
@@ -93,6 +94,15 @@ export default new VueRouter({
           path: '/addFood',
           name: 'addFood',
           component: addFood,
+          meta: {
+            //未登录拦截
+            requireAuth: true
+          },
+        },
+        {
+          path: '/orders',
+          name: 'orders',
+          component: ordersList,
           meta: {
             //未登录拦截
             requireAuth: true

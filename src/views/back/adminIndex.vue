@@ -102,10 +102,14 @@
                   </router-link>
                 </el-menu-item-group>
               </el-submenu>
+              <router-link to="orders">
               <el-menu-item index="5">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
+
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">订单列表</span>
+
               </el-menu-item>
+              </router-link>
             </el-menu>
           </el-col>
         </el-row>
