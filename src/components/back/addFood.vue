@@ -57,19 +57,23 @@
             callback();
           }
         };
+        var checkType = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请选择食物类型'));
+          }  else {
+            callback();
+          }
+        };
         return {
           editForm: {
-
             foodName: '',
             foodType: {
-
               typeName :''
             },
-
+            price:'',
             description: ''
           },
           foodTypeList: {
-
           },
           rules: {
             foodName: [

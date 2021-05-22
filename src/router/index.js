@@ -13,12 +13,17 @@ import addFood from "../components/back/addFood";
 import mainIndex from "../views/front/mainIndex";
 import home from "../components/front/home";
 import ordersList from "../components/back/ordersList";
+import menu from "../components/front/menu";
 
 Vue.use(VueRouter);
 
 export default new VueRouter({
   mode:'history',
   routes:[
+    {
+      path: '/',
+      redirect:'/home'
+    },
     {
       path: '/mainIndex',
       name: 'mainIndex',
@@ -28,6 +33,11 @@ export default new VueRouter({
           path: '/home',
           name: 'home',
           component: home,
+        },
+        {
+          path: '/menu',
+          name: 'menu',
+          component: menu,
         }
       ]
     },

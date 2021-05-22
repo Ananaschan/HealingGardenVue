@@ -112,6 +112,8 @@
                 //添加成功！
                 this.$alert('添加成功！');
                 this.$router.replace({path: '/userList'})
+              }else {
+                this.$message.error("添加失败 用户名已存在")
               }
             })
             .catch(failResponse => {

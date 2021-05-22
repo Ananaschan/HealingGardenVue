@@ -2,7 +2,10 @@
   <div class="block">
     <el-carousel>
       <el-carousel-item v-for="item in imagesBox" :key="item.id">
-        <img :src="item.idView">
+        <el-image
+          style="width: 1980px; height: 400px"
+          :src="item.idView"
+          :fit="fit"></el-image>
       </el-carousel-item>
     </el-carousel>
 
@@ -71,7 +74,10 @@
         <el-row :gutter="24">
           <el-col :span="4" offset="6">
             <div class="single-menu-item">
-              <div class="menu-item-bg1"></div>
+              <el-image
+                style="width: 200px; height: 200px"
+                :src="menuImg1"
+                :fit="fit2"></el-image>
               <h4>Classic Cheese</h4>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, numquam.</p>
               <p class="price-tag"><b>$22</b> Plus Tax</p>
@@ -80,7 +86,10 @@
           </el-col>
           <el-col :span="4">
             <div class="single-menu-item">
-              <div class="menu-item-bg2"></div>
+              <el-image
+                style="width: 200px; height: 200px"
+                :src="menuImg2"
+                :fit="fit2"></el-image>
               <h4>Vegetable &amp; Mozzarella</h4>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, numquam.</p>
               <p class="price-tag"><b>$22</b> Plus Tax</p>
@@ -89,7 +98,10 @@
           </el-col>
           <el-col :span="4">
             <div class="single-menu-item">
-              <div class="menu-item-bg3"></div>
+              <el-image
+                style="width: 200px; height: 200px"
+                :src="menuImg3"
+                :fit="fit2"></el-image>
               <h6>Napelotana</h6>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, numquam.</p>
               <p class="price-tag"><b>$22</b> Plus Tax</p>
@@ -136,7 +148,8 @@
                 <h6 class="wow slideInDown">Trending</h6>
                 <h2 class="wow slideInDown">Pizzeola in NY</h2>
               </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti voluptate alias labore, fugit, dicta expedita?</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti voluptate alias labore, fugit, dicta
+                expedita?</p>
             </div>
           </el-col>
         </el-row>
@@ -152,12 +165,18 @@
     name: "home",
     data() {
       return {
+        fit: "cover",
+        fit2: "fill",
         imagesBox: [
           {id: 1, idView: require("../../assets/img/slider/hero-area-bg.jpg")},
           {id: 2, idView: require("../../assets/img/slider/hero-area-bg-2.jpg")},
           {id: 3, idView: require("../../assets/img/slider/hero-area-bg-3.jpg")}
         ],
-        fiveNews: []
+        fiveNews: [],
+        menuImg1:require("../../assets/img/menu/menu-item-bg-2.jpg"),
+        menuImg2:require("../../assets/img/menu/menu-item-bg-3.jpg"),
+        menuImg3:require("../../assets/img/menu/menu-item-bg.jpg"),
+
       }
     }
   }
@@ -225,7 +244,7 @@
     color: #909399
   }
 
-  .menu-area .order-btn{
+  .menu-area .order-btn {
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
@@ -235,6 +254,7 @@
     padding: 8px 10px;
     color: black;
   }
+
   .menu-item-bg1 {
     filter: brightness(75%);
     background-image: url("../../assets/img/menu/menu-item-bg-2.jpg");
@@ -257,7 +277,9 @@
     margin: auto;
   }
 
-  .cta-area{
+  .cta-area {
+    margin-top: 100px;
+    margin-bottom: 100px;
     background-size: cover;
     background-position: center;
     background-color: #ddd;
@@ -280,9 +302,10 @@
     margin: 20px;
   }
 
-  .cta-content p{
+  .cta-content p {
     color: #909399
   }
+
   .cta-right-content {
     padding: 100px;
     text-align: center;
@@ -299,7 +322,7 @@
     margin-top: 30px;
   }
 
-  .ranking-section{
+  .ranking-section {
 
   }
 

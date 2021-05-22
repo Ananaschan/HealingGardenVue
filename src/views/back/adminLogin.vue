@@ -12,18 +12,9 @@
               clearable>
             </el-input>
             <el-input placeholder="请输入密码" v-model="loginForm.password" show-password></el-input>
-            <el-row>
-              <el-col :span="12"><div class="grid-content bg-purple">
-                <el-input
-                  placeholder="请输入验证码"
-                  clearable>
-                </el-input>
-              </div></el-col>
-              <el-col :span="12"><div class="grid-content bg-purple-light">验证码图片</div></el-col>
-            </el-row>
           </div>
           <el-button class="button" type="primary" round v-on:click="login">登入</el-button>
-          <el-button class="button" type="info" round>清空</el-button>
+          <el-button class="button" type="info" round @click="reset">清空</el-button>
         </el-card>
       </div>
 
@@ -60,10 +51,16 @@
                 _this.$store.commit('adminLogin',_this.loginForm)
                 var path = this.$route.query.redirect
                 this.$router.replace({path: path==='/' || path === undefined ? 'adminIndex' : path})
+              }else {
+                this.$message.error('登录失败');
               }
             })
             .catch(failResponse => {
             })
+        },
+        reset(){
+          this.loginForm.userName = ""
+          this.loginForm.password = ""
         }
       }
     }

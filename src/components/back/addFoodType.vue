@@ -3,7 +3,7 @@
   <h1 style="">添加食品种类</h1>
   <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-    <el-form-item label="种类名称" prop="userName">
+    <el-form-item label="种类名称" prop="typeName">
       <el-input type="text" v-model="ruleForm.typeName" autocomplete="off"></el-input>
     </el-form-item>
 
@@ -21,7 +21,7 @@
       data() {
         var checkTypeName = (rule, value, callback) => {
           if (value === '') {
-            return callback(new Error('用户名不能为空'));
+            return callback(new Error('食品种类不能为空'));
           } else {
             callback();
           }
